@@ -3,7 +3,7 @@
 module.exports = {
   development: {
     client: "pg",
-    connection: "postgresql://localhost/WunderListDb",
+    connection: "postgresql://localhost/wunderlistdb",
     migrations: {
       tableName: "knex_migrations",
       directory: "./database/migrations"
