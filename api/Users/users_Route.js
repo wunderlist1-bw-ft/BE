@@ -2,6 +2,7 @@ const route = require("express").Router();
 const userDb = require("./useers_Model");
 
 route.get("/", (req, res) => {
+  console.log("users");
   userDb
     .all()
     .then(users => {
