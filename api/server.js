@@ -7,9 +7,9 @@ const todoRoute = require("./Todo_lists/todo_lists_Route");
 const taskRoute = require("./Tasks/tasks_Route");
 
 server.use(express.json());
-server.use("api/auth/users", userRoute);
-server.use("api/auth/todos", todoRoute);
-server.use("api/auth/tasks", taskRoute);
+server.use("/api/auth/users", userRoute);
+server.use("/api/auth/todos", todoRoute);
+server.use("/api/auth/tasks", taskRoute);
 
 server.get("/", (req, res) => {
   res.send({ jarvis: "your are in sir" });
