@@ -31,7 +31,7 @@ router.post("/register", (req, res) => {
         res.status(200).json({ Message: `${user.username} has been added` });
       })
       .catch(err => {
-        res.status(500).json({ ERROR: "could not add" });
+        res.status(500).json({ ERROR: err.message });
       });
   } else {
     res.status(500).json({ Error: "Needs username, password" });
