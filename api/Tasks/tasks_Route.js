@@ -5,9 +5,14 @@ route.get("/", (req, res) => {
   taskDb
     .all()
     .then(tasks => {
-      res.status(200).json(tasks);
+      if (tasks.length > 0) {
+        res.status(200).json(tasks);
+      } else {
+        res.status(404).json({ ERROR: "No tasks found" });
+      }
     })
     .catch(err => {
+      res.status(500).json({ ERROR: "could not get tasks" });
       console.log(err);
     });
 });
@@ -34,6 +39,7 @@ route.post("/add", checkBody, (req, res) => {
       res.status(200).json({ Message: "Added Successfully" });
     })
     .catch(err => {
+      res.status(500).json({ ERROR: "Could not add" });
       console.log(err);
     });
 });
@@ -46,6 +52,23 @@ route.post("/:id", checkBody, (req, res) => {
     .update(id, body)
     .then(ele => {
       res.status(200).json(body);
+    })
+    .catch(err => {
+      res.status(500).json({ ERROR: "Could not update" });
+      console.log(err);
+    });
+});
+
+route.delete("/:id", (req, res) => {
+  const id = req.params.id;
+  taskDb
+    .del(id)
+    .then(ele => {
+      if (ele === 1) {
+        res.status(200).json({ Message: "Removed succeeded" });
+      } else {
+        res.status(500).json({ ERROR: "Could not delete" });
+      }
     })
     .catch(err => {
       console.log(err);

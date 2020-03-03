@@ -73,6 +73,7 @@ route.post("/add", bodyCheck, (req, res) => {
       res.status(201).json(body);
     })
     .catch(err => {
+      res.status(500).json({ ERROR: "Could not add" });
       console.log(err);
     });
 });
@@ -87,6 +88,22 @@ route.post("/:id", bodyCheck, (req, res) => {
         res.status(200).json({ Message: "Change successful" });
       } else {
         res.status(404).json({ ERROR: "No todo with that id found" });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
+
+route.delete("/:id", (req, res) => {
+  const id = req.params.id;
+  todoDb
+    .del(id)
+    .then(ele => {
+      if (ele === 1) {
+        res.status(200).json({ Message: "Removed succeeded" });
+      } else {
+        res.status(500).json({ ERROR: "Could not delete" });
       }
     })
     .catch(err => {

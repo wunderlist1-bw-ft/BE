@@ -8,7 +8,11 @@ router.get("/", (req, res) => {
   userdb
     .all()
     .then(users => {
-      res.status(200).json(users);
+      if (users.length > 0) {
+        res.status(200).json(users);
+      } else {
+        res.status(404).json({ ERROR: "no users found" });
+      }
     })
     .catch(err => {
       console.log(err);
@@ -26,7 +30,9 @@ router.post("/register", (req, res) => {
       .then(ele => {
         res.status(200).json({ Message: `${user.username} has been added` });
       })
-      .catch(err => {});
+      .catch(err => {
+        res.status(500).json({ ERROR: "could not add" });
+      });
   } else {
     res.status(500).json({ Error: "Needs username, password" });
   }
@@ -48,6 +54,22 @@ router.post("/login", (req, res) => {
     })
     .catch(err => {
       console.log(err.message);
+    });
+});
+
+router.delete("/:id", (req, res) => {
+  const id = req.params.id;
+  userdb
+    .del(id)
+    .then(ele => {
+      if (ele === 1) {
+        res.status(200).json({ Message: "Removed succeeded" });
+      } else {
+        res.status(500).json({ ERROR: "Could not delete" });
+      }
+    })
+    .catch(err => {
+      console.log(err);
     });
 });
 

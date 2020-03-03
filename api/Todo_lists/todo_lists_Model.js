@@ -22,7 +22,12 @@ function update(id, body) {
     .where({ id })
     .update(body);
 }
-function del() {}
+function del(id) {
+  return db("Todo_List")
+    .where({ id })
+    .del();
+}
+
 function findById(id) {
   return db("Todo_List")
     .where({ id })
